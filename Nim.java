@@ -6,17 +6,19 @@ public class Nim {
     private Player player1;
     private Player player2;
     private int turn;
-    private boolean game_over;
+    private boolean gameOver;
 
     static Scanner sc = new Scanner(System.in);
 
     public Nim() {
+        setupPlayers();
+
         this.pieces = setPieces();
 
         // randomize who starts
         this.turn = (int) ((Math.random() * 2) + 0);
 
-        this.game_over = false;
+        this.gameOver = false;
     }
 
     // Accessors
@@ -27,13 +29,25 @@ public class Nim {
 
     // Mutators
 
+    /*
+     * Precondition:
+     *  Nim object is created
+     *  The user is either starting or reseting the game
+     * Postcondition:
+     *  Instance variable pieces is updated
+     * @return integer value to set the instance variable pieces to
+     */
     private int setPieces() {
         // random integer between 10-50
         return (int) (Math.random() * 40) + 10;
     }
 
-    
-    // additional methods
+    /*
+     * Precondition:
+     *  Nim object is created
+     * Postcondition:
+     *  Player instance variables are updated for a game to be player
+     */
     private void setupPlayers() {
         // setup board
         System.out.println("What is Player 1's name?");
@@ -42,12 +56,20 @@ public class Nim {
         this.player2 = new Player(sc.nextLine());
         clearScreen();
     }
+    
+    // additional methods
 
+    /*
+     * Precondition:
+     *  Players are created
+     *  turn, game_over, and other variables have been initialized
+     * Postcondition:
+     *  Game continues and resets or is terminated
+     *  The two players' stats are changed based on the result
+     */
     public void play() {
-        
-        setupPlayers();
-
-        while (!this.game_over) {
+        resetGame();
+        while (!this.gameOver) {
             System.out.printf("\nPieces Left: %s%n", this.pieces);
             switch(this.turn%2) {
                 case 0:
@@ -74,12 +96,26 @@ public class Nim {
         }
     }
     
-    public void resetGame() {
+    /*
+     * Precondition:
+     *  A game has been completed
+     * Postcondition:
+     *  pieces and turn instance variables are reset for play main loop to continue
+     */
+    private void resetGame() {
+        this.gameOver = false;
         this.pieces = setPieces();
         this.turn = (int) ((Math.random() * 2) + 0);
     }
     
-    public void endGame() {
+    /*
+     * Precondition:
+     *  A game has been completed
+     * Postcondition:
+     *  Stats are updated and shown of each player
+     *  The game is reset if the user chooses to keep playing
+     */
+    private void endGame() {
         // check winner
         if (this.turn%2 == 0) {
             System.out.printf("%n%s won the game!%n", this.player2.getName());
@@ -96,13 +132,22 @@ public class Nim {
         // play again?
         System.out.println("\nDo you want to play again? (y/n)");
         sc.nextLine();
-        if (sc.nextLine().strip().toLowerCase().equals("n")) this.game_over = true;
+        if (sc.nextLine().strip().toLowerCase().equals("n")) this.gameOver = true;
         else {
             resetGame();
         }
     }
 
-    public boolean grabPieces(Player p) {
+    /*
+     * Precondition:
+     *  Players exist
+     *  pieces instance variable has been initialized to a random integer and is continually updated
+     * Postcondition:
+     *  Turn of the player is intended to end or continue in the main loop
+     * 
+     * @return boolean of whether or not the player's turn is over
+     */
+    private boolean grabPieces(Player p) {
         System.out.println("How many pieces do you want to grab?");
         int num = sc.nextInt();
         if (num > 3 || num > this.pieces) {

@@ -16,21 +16,42 @@ public class Player {
         this("Dr. Nim");
     }
 
-    // Accessors
-    
+    //---------------------------------Accessors---------------------------------------
+    /*
+     * Precondition:
+     *  name is populated
+     * Postcondition:
+     *  String
+     * @return String value name
+     */
+
     public String getName() {
         return this.name;
     }
+    /*
+     * Precondition:
+     *  Stats array is populated with a win value
+     * Postcondition:
+     *  int
+     * @return int value wins (from stats array)
+     */
 
     public int getWins() {
         return this.stats[0];
     }
 
+    /*
+     * Precondition:
+     *  Stats array is populated with a loss value
+     * Postcondition:
+     *  int
+     * @return int value losses (from stats array)
+     */
     public int getLosses() {
         return this.stats[1];
     }
 
-    // Mutators
+    //-------------------------------------Mutators------------------------------------
 
     public void setName(String name) {
         this.name = name;
@@ -45,8 +66,17 @@ public class Player {
     }
 
     // other
-
+    
+    /*
+     * Precondition:
+     *  Player p is populated
+     *  Stats Array is populated with both a win and loss number
+     * Postcondition:
+     *  boolean
+     * @return boolean value true/false
+     */
     public boolean playerEquals(Player p) {
+        //if (p == null) return false;
         if (p.getName().equals(this.name) && p.getWins() == this.stats[0] && p.getLosses() == this.stats[1]) return true;
         else return false;
     }
