@@ -47,15 +47,7 @@ public class Player {
     // other
 
     public boolean playerEquals(Player p) {
-        return false;
-    }
-
-    public String toString() {
-        String info = "";
-
-        // print stats
-        info += getName() + "'s Win/Loss Ratio: " + getWins() + "/" + getLosses();
-        
-        return info;
+        if (p.getName().equals(this.name) && p.getWins() == this.stats[0] && p.getLosses() == this.stats[1]) return true;
+        else return false;
     }
 }

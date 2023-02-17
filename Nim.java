@@ -48,7 +48,7 @@ public class Nim {
         setupPlayers();
 
         while (!this.game_over) {
-            System.out.printf("\nPieces Left: %s%n", getPieces());
+            System.out.printf("\nPieces Left: %s%n", this.pieces);
             switch(this.turn%2) {
                 case 0:
                 System.out.println("It is " + this.player1.getName() + "'s turn.");
@@ -66,7 +66,7 @@ public class Nim {
                     break;
             }
             // gameover
-            if (getPieces() == 0) {
+            if (this.pieces == 0) {
                 endGame();
             }
             wait(1000);
@@ -92,7 +92,7 @@ public class Nim {
             this.player2.incLoss();
         }
         // print stats
-        System.out.println(this.player1 + "\n" + this.player2);
+        System.out.println(this);
         // play again?
         System.out.println("\nDo you want to play again? (y/n)");
         sc.nextLine();
@@ -127,5 +127,17 @@ public class Nim {
         catch(Exception e){
             System.out.println("Broke :(");
         }
+    }
+
+    public String toString() {
+        String info = "";
+
+        // print stats
+        if (this.player1 != null) info += this.player1.getName() + "'s Win/Loss Ratio: " + this.player1.getWins() + "/" + this.player1.getLosses() + "\n";
+        else info += "No information is available on Player 1\n";
+        if (this.player2 != null) info += this.player2.getName() + "'s Win/Loss Ratio: " + this.player2.getWins() + "/" + this.player2.getLosses();
+        else info += "No information is available on Player 2";
+
+        return info;
     }
 }
